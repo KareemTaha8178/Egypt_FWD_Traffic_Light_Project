@@ -134,7 +134,7 @@ STD_ReturnType gpio_port_get_direction_status(const port_index_t port, uint8 *di
     @brief : assigned logic to port
     @return : return 1 if initialization made successfully or 0.
 */
-STD_ReturnType gpio_port_write_logic(const port_index_t port, uint8 logic);
+STD_ReturnType gpio_port_write_logic(const port_index_t port, logic_t logic);
 
 /** My function read logic from port
     @param : port & pointer to assigned logic at it

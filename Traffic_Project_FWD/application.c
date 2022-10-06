@@ -10,6 +10,44 @@
 
 STD_ReturnType ret = 0x00;
 
+
+pin_config_t pin_1 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN0,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+pin_config_t pin_2 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN1,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+pin_config_t pin_3 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN2,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+pin_config_t pin_4 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN3,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+pin_config_t pin_5 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN4,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+pin_config_t pin_6 = {
+	.port = PORTC_INDEX,
+	.pin = GPIO_PIN5,
+	.logic = GPIO_LOW,
+	.direction = GPIO_INPUT_DIRECTION,
+};
+
 led_t led_1 = {
 	.port_name = PORTC_INDEX,
 	.pin_number = GPIO_PIN0,
@@ -62,18 +100,20 @@ button_state_t button_1 = BUTTON_RELEASED;
 
 void app_Start(){
 	application_initialize();
+	
 	while (1)
 	{
+		
 		int flag1 = 0, flag2 = 0, flag3 = 0;
 		led_turn_on(&led_1);
-		for(int i = 0; i < 20; i++){
+		for(int i = 0; i < 5; i++){
 			int flag_green = 0;
-			for(int j = 0; j < 250; j++){
+			for(int j = 0; j < 1000; j++){
 				button_read_state(&btn_1, &button_1);
 				if(button_1 == BUTTON_PRESSED) flag_green++;
 				_delay_ms(1);
 			}
-			if(flag_green > 0 && flag_green < 50 && flag1 == 0){
+			if(flag_green > 0 && flag_green < 250 && flag1 == 0){
 				led_turn_on(&led_6);
 				_delay_ms(500);
 				flag1 = 1;
@@ -81,16 +121,16 @@ void app_Start(){
 			}
 		}
 		led_turn_off(&led_1);
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 5; i++){
 			led_toggle_logic(&led_2);
 			if(flag1 == 1) led_toggle_logic(&led_5);
 			int flag_yellow = 0;
-			for(int j = 0; j < 500; j++){
+			for(int j = 0; j < 1000; j++){
 				button_read_state(&btn_1, &button_1);
 				if(button_1 == BUTTON_PRESSED) flag_yellow++;
 				_delay_ms(1);
 			}
-			if(flag_yellow > 0 && flag_yellow < 100 && flag2 == 0){
+			if(flag_yellow > 0 && flag_yellow < 250 && flag2 == 0){
 				led_turn_on(&led_6);
 				_delay_ms(500);
 				for(int k = 0; k < 10; k++){
@@ -107,14 +147,14 @@ void app_Start(){
 		if(flag1 == 1 || flag2 == 1) led_turn_off(&led_6);
 		led_turn_on(&led_3);
 		if(flag1 == 1 || flag2 == 1) led_turn_on(&led_4);
-		for(int i = 0; i < 20; i++){
+		for(int i = 0; i < 5; i++){
 			int flag_red = 0;
-			for(int j = 0; j < 250; j++){
+			for(int j = 0; j < 1000; j++){
 				button_read_state(&btn_1, &button_1);
 				if(button_1 == BUTTON_PRESSED) flag_red++;
 				_delay_ms(1);
 			}
-			if(flag_red > 0 && flag_red < 50 && flag3 == 0){
+			if(flag_red > 0 && flag_red < 250 && flag3 == 0){
 				led_turn_on(&led_4);
 				_delay_ms(5000);
 				flag3 = 1;
@@ -132,7 +172,16 @@ int main(void)
 	app_Start();
 }
 
+
+
 void application_initialize(void){
+	gpio_port_direction_init(PORTC_INDEX, GPIO_INPUT_DIRECTION);
+	gpio_pin_direction_init(&pin_1);
+	gpio_pin_direction_init(&pin_2);
+	gpio_pin_direction_init(&pin_3);
+	gpio_pin_direction_init(&pin_4);
+	gpio_pin_direction_init(&pin_5);
+	gpio_pin_direction_init(&pin_6);
 	led_initialize(&led_1);
 	led_initialize(&led_2);
 	led_initialize(&led_3);

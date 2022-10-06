@@ -146,11 +146,15 @@ STD_ReturnType gpio_port_get_direction_status(const port_index_t port, uint8 *di
     @brief : assigned logic to port
     @return : return 1 if initialization made successfully or 0.
 */
-STD_ReturnType gpio_port_write_logic(const port_index_t port, uint8 logic){
+STD_ReturnType gpio_port_write_logic(const port_index_t port, logic_t logic){
     STD_ReturnType ret = E_OK;
     if(port > MAX_PORT_NUM - 1) ret = E_NOT_OK;
     else{
-        *port_register[port] = logic;
+		if(logic == GPIO_HIGH){
+			 *(port_register[port]) = (0xFF);
+		}else{
+			*(port_register[port]) = (0x00);
+		}
     }
     return ret; 
 }
